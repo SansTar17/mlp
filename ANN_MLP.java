@@ -21,7 +21,7 @@ public class ANN_MLP {
         //PREPROCESS STEP
         //reading the dataset and save it into data variable
         Preprocess Preprocess = new Preprocess();
-        String csvPath = "/root/java_codes/ann/dataset.csv";
+        String csvPath = "dataset.csv";
         List<String[]> data = Preprocess.readCSV(csvPath);
         
         Preprocess.printHead(data, 5);
