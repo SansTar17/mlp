@@ -183,8 +183,9 @@ public class MLP implements Serializable{
         
     }
     
-    public static double testMLP(MLP mlp, double[][] testData) {
+    public static void testMLP(MLP mlp, double[][] testData) {
         int numCorrect = 0;
+        double mse = 0.0;
         for (int i = 0; i < testData.length; i++) {
             double[] input = Arrays.copyOfRange(testData[i], 0, testData[i].length - 1);
             double[] output = mlp.feedForward(input);
@@ -193,10 +194,17 @@ public class MLP implements Serializable{
             if (predictedClass == actualClass) {
                 numCorrect++;
             }
+            double error = 0.0;
+            for (int j = 0; j < output.length; j++) {
+                double target = (j == actualClass) ? 1.0 : 0.0;
+                error += Math.pow(target - output[j], 2);
+            }
+            mse += error / output.length;
         }
         double accuracy = (double) numCorrect / testData.length;
+        double avgMSE = mse / testData.length;
         System.out.println("Accuracy: " + accuracy);
-        return accuracy;
+        System.out.println("Mean Squared Error: " + avgMSE);
     }
 
     private static int findMaxIndex(double[] array) {
